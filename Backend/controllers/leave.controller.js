@@ -44,7 +44,7 @@ export const getLeaveRequests = async (req, res, next) => {
 export const updateLeaveRequestStatus = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { status } = req.body; // New status, such as 'Approved' or 'Rejected'
+    const { status } = req.body; 
 
 
     if(req.user.role!== "admin"){
@@ -67,7 +67,6 @@ export const updateLeaveRequestStatus = async (req, res, next) => {
     }
     const currentDate = new Date();
   
-  // Optional: Format the date if needed (e.g., to a readable string)
   const formattedDate = currentDate.toISOString();
 
     const updatedAttendance = await Attendance.create({

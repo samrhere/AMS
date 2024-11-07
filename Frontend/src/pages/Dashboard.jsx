@@ -29,7 +29,7 @@ const Dashboard = () => {
         if (attendanceData.success && Array.isArray(attendanceData.data)) {
           setAttendanceRecords(attendanceData.data);
         } else {
-          console.error('Invalid attendance data received:', attendanceData);
+          console.log('attendance data received:', attendanceData);
         }
       } catch (error) {
         console.error('Error fetching attendance records:', error);
@@ -45,7 +45,7 @@ const Dashboard = () => {
         if (leaveData.success && Array.isArray(leaveData.data)) {
           setLeaveRecords(leaveData.data);
         } else {
-          console.error('Invalid leave data received:', leaveData);
+          console.log('leave data received:', leaveData);
         }
       } catch (error) {
         console.error('Error fetching leave records:', error);
@@ -61,8 +61,8 @@ const Dashboard = () => {
         if (gradeData.success && gradeData.data !== undefined) {
           setGrade(gradeData.data);
         } else {
-          console.error('Error fetching grade data:', gradeData);
-          toast.error('Failed to fetch grade data');
+          console.log('Error fetching grade data:', gradeData);
+          alert('Failed to fetch grade data');
         }
       } catch (error) {
         console.log('Error fetching grade:', error);
@@ -96,13 +96,13 @@ const Dashboard = () => {
       if (data.success && Array.isArray(data.record)) {
         setAttendanceRecords(prev => [...prev, ...data.record]);
         setAttendanceStatus('');
-        toast.success('Attendance marked successfully!');
+        alert('Attendance marked successfully!');
       } else {
-        console.error('Invalid data received:', data);
+        console.log('data received:', data);
         toast.error('Error marking attendance: Invalid data received');
       }
     } catch (error) {
-      console.error('Error marking attendance:', error);
+      console.log('Error marking attendance:', error);
       toast.error('Failed to mark attendance');
     }
   };
@@ -122,9 +122,9 @@ const Dashboard = () => {
     if (data.success) {
       setLeaveRecords(prev => [...prev, data.record]);
       setLeaveReason('');
-      toast.success('Leave requested successfully!');
+      alert('Leave requested successfully!');
     } else {
-      toast.error(`Error requesting leave: ${data.message}`);
+      alert(`Error requesting leave: ${data.message}`);
     }
   };
 
@@ -137,7 +137,7 @@ const Dashboard = () => {
 
       if (res.ok) {
         dispatch(logoutSuccess());
-        toast.success("Logging out...");
+        alert("Logging out...");
         navigate("/");
       } else {
         toast.error(data.message || 'Logout failed');

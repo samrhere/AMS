@@ -21,7 +21,7 @@ const AdminDashboard = () => {
             if (typeof data === 'object' && Array.isArray(data.data)) {
                 setAttendances(data.data);
             } else {
-                console.error('Unexpected data structure received:', data);
+                console.log('data received:', data);
                 setAttendances([]);
             }
         } catch (error) {
@@ -40,7 +40,7 @@ const AdminDashboard = () => {
             if (typeof data === 'object' && Array.isArray(data.data)) {
                 setLeaveRequests(data.data);
             } else {
-                console.error('Unexpected data structure received:', data);
+                console.log('data received:', data);
                 setLeaveRequests([]);
             }
         } catch (error) {
@@ -59,7 +59,7 @@ const AdminDashboard = () => {
             if (typeof data === 'object' && Array.isArray(data.data)) {
                 setGrades(data.data);
             } else {
-                console.error('Unexpected data structure received:', data);
+                console.log('data received:', data);
                 setGrades([]);
             }
         } catch (error) {
@@ -185,22 +185,28 @@ const AdminDashboard = () => {
                                     leaveRequests.map((request) => (
                                         <tr key={request._id}>
                                             <td className="px-4 py-2 border">{request.studentId?.username || 'Unknown Student'}</td>
-                                            <td className="px-4 py-2 border">{new Date(request.createdAt).toLocaleDateString()}</td>
+                                            <td className="px-4 py-2 border">{request.createdAt ? new Date(request.createdAt).toLocaleDateString() : 'N/A'}</td>
                                             <td className="px-4 py-2 border">{request.reason}</td>
                                             <td className="px-4 py-2 border">{request.status}</td>
                                             <td className="px-4 py-2 border flex gap-2">
-                                                <button
-                                                    className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
-                                                    onClick={() => handleLeaveAction(request._id, 'Approved')}
-                                                >
-                                                    Approve
-                                                </button>
-                                                <button
-                                                    className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                                                    onClick={() => handleLeaveAction(request._id, 'Rejected')}
-                                                >
-                                                    Reject
-                                                </button>
+                                                {request.status === 'Pending' ? (
+                                                    <>
+                                                        <button
+                                                            className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+                                                            onClick={() => handleLeaveAction(request._id, 'Approved')}
+                                                        >
+                                                            Approve
+                                                        </button>
+                                                        <button
+                                                            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                                                            onClick={() => handleLeaveAction(request._id, 'Rejected')}
+                                                        >
+                                                            Reject
+                                                        </button>
+                                                    </>
+                                                ) : (
+                                                    <span className="text-gray-500">{request.status}</span> // Show current status if not pending
+                                                )}
                                             </td>
                                         </tr>
                                     ))

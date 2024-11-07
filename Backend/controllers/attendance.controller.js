@@ -10,13 +10,11 @@ const calculateGrade = (attendancePercentage) => {
   else return 'F';
 };
 
-// Mark Attendance
 export const markAttendance = async (req, res, next) => {
   try {
     const studentId = req.user._id
     const { date, status } = req.body;
 
-    // Check if attendance for the date already exists for the student
     const existingAttendance = await Attendance.findOne({ studentId, date });
 
     if (existingAttendance) {
@@ -61,26 +59,6 @@ export const markAttendance = async (req, res, next) => {
 };
 
 
-// // Mark Attendance
-// export const markAttendance = async (req, res, next) => {
-//   try {
-//     const { studentId, date, status } = req.body;
-
-//     // Check if attendance for the date already exists for the student and course
-//     const existingAttendance = await Attendance.findOne({ studentId, date });
-
-//     if (existingAttendance) {
-//       return res.status(400).json({ success: false, message: 'Attendance already marked for this date' });
-//     }
-//       const attendance = await Attendance.create({ studentId, date, status });
-    
-//     res.status(201).json({ success: true, message: 'Attendance marked successfully', data: attendance });
-//   } catch (error) {
-//     res.status(500).json({ success: false, message: 'Error marking attendance', error: error.message });
-//   }
-// };
-
-// View Attendance Records
 export const getAttendanceRecords = async (req, res, next) => {
   try {
     const studentId = req.user.id;
