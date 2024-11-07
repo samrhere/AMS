@@ -54,7 +54,7 @@ const Dashboard = () => {
 
     const fetchGrade = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/grade/get-student-grades');
+        const res = await fetch('/api/grade/get-student-grades');
         const gradeData = await res.json();
         console.log("Grade data :::: ", gradeData);
 
@@ -87,7 +87,7 @@ const Dashboard = () => {
       const res = await fetch('/api/attendance/mark-attendance', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ studentId: userId, status: attendanceStatus, date: new Date().toISOString().split('T')[0] }),
+        body: JSON.stringify({ status: attendanceStatus, date: new Date().toISOString().split('T')[0] }),
       });
 
       const data = await res.json();

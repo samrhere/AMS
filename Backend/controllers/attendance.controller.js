@@ -1,5 +1,5 @@
 import { Attendance } from '../models/attendance.model.js';
-import { User } from '../models/User.model.js';
+import { Grade } from '../models/grade.model.js';
 import { errorHandler } from '../utils/errorHandler.js';
 
 const calculateGrade = (attendancePercentage) => {
@@ -13,7 +13,8 @@ const calculateGrade = (attendancePercentage) => {
 // Mark Attendance
 export const markAttendance = async (req, res, next) => {
   try {
-    const { studentId, date, status } = req.body;
+    const studentId = req.user._id
+    const { date, status } = req.body;
 
     // Check if attendance for the date already exists for the student
     const existingAttendance = await Attendance.findOne({ studentId, date });
